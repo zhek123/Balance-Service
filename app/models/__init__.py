@@ -1,12 +1,7 @@
-from gino import Gino
+from .transaction import Transaction
+from .user import User
 
-db = Gino()
-
-
-class User(db.Model):
-    balance = db.Column(...)
-    ...
-
-
-class Transaction(db.Model):
-    ...
+__all__ = [
+    'Transaction',
+    'User',
+]

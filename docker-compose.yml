@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=${DEBUG}
+      - HOST=${HOST}
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
+      - ASYNC_DATABASE_URI=${ASYNC_DATABASE_URI}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/src
+    command: >
+      sh -c "
+      python -m app
+      alembic upgrade head &&§
+      "
+
+  db:
+    image: postgres:14
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      retries: 5
+
+volumes:
+  postgres_data:

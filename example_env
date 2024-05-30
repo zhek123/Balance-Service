@@ -1,0 +1,8 @@
+DEBUG=True
+HOST=0.0.0.0
+PORT=8000
+POSTGRES_DB=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+ASYNC_DATABASE_URI=postgresql+asyncpg://postgres:postgres@db:5432/postgres
